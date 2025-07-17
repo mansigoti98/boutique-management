@@ -1,0 +1,35 @@
+﻿@model List<BoutiqueManagement.Models.BoutiqueItem>
+@{
+    ViewBag.Title = "Rentals";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Rental Outfits</h3>
+        <div>
+            <a class="btn btn-info me-2" asp-action="CheckAvailability">Check Availability</a>
+            <a class="btn btn-success" asp-action="Create">+ Add Rental Item</a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm h-100">
+                    <img src="@item.ImageUrl" class="card-img-top" style="height:200px;object-fit:cover;" alt="@item.Name">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.Name</h5>
+                        <small class="text-muted">Rent: ₹@item.RentalPrice</small><br />
+                        <small class="text-muted">Code: @item.ItemCode</small>
+                        <a class="btn btn-primary btn-sm mt-auto"
+                           asp-action="BookRental" asp-route-itemCode="@item.ItemCode">
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model List<BoutiqueManagement.Models.BoutiqueItem>
+
+<div class="container mt-4">
+    <h2>All Boutique Items</h2>
+    <table class="table table-bordered mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Rental?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="@item.ImageUrl" width="80" /></td>
+                    <td>@item.Name</td>
+                    <td>@item.RentalPrice</td>
+                    <td>@(item.IsRental ? "Yes" : "No")</td>
+                    <td>
+                        <a href="/Boutique/Invoice/@item.Id?customerName=Demo" class="btn btn-sm btn-success">Generate Invoice</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

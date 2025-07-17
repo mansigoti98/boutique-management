@@ -1,0 +1,45 @@
+﻿@model BoutiqueManagement.Models.RentalTransaction
+@{
+    ViewBag.Title = "Book Rental";
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+<div class="container mt-5" style="max-width:600px;">
+    <div class="card shadow p-4">
+        <h4>Book Rental - @Model.BoutiqueItem?.Name</h4>
+
+        <form asp-action="BookRental" method="post" class="mt-3">
+            <input type="hidden" asp-for="ItemCode" />
+
+            <div class="mb-3">
+                <label>Rental Start Date</label>
+                <input asp-for="RentalStartDate" type="date" id="startDate" class="form-control" min="@today" required />
+            </div>
+            <div class="mb-3">
+                <label>Rental End Date</label>
+                <input asp-for="RentalEndDate" type="date" id="endDate" class="form-control" min="@today" required />
+            </div>
+            <div class="mb-3">
+                <input asp-for="CustomerName" class="form-control" placeholder="Customer Name" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mt-3">@Html.ValidationSummary()</div>
+            }
+        </form>
+    </div>
+</div>
+
+<script>
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+
+    startDateInput.addEventListener('change', () => {
+        endDateInput.min = startDateInput.value;
+        if (endDateInput.value < startDateInput.value) {
+            endDateInput.value = startDateInput.value;
+        }
+    });
+</script>

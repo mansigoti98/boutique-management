@@ -1,0 +1,38 @@
+﻿@model BoutiqueManagement.Models.RentalTransaction
+
+@{
+    ViewBag.Title = "Rental Invoice";
+}
+
+<div class="container mt-5" style="max-width:600px;">
+    <div class="card shadow p-4">
+        <h3 class="mb-4 text-center">Rental Invoice</h3>
+
+        <dl class="row">
+            <dt class="col-sm-4">Item:</dt>
+            <dd class="col-sm-8">@Model.BoutiqueItem?.Name</dd>
+
+            <dt class="col-sm-4">Code:</dt>
+            <dd class="col-sm-8">@Model.ItemCode</dd>
+
+            <dt class="col-sm-4">Customer:</dt>
+            <dd class="col-sm-8">@Model.CustomerName</dd>
+
+            <dt class="col-sm-4">Start:</dt>
+            <dd class="col-sm-8">@Model.RentalStartDate.ToString("dd MMM yyyy")</dd>
+
+            <dt class="col-sm-4">End:</dt>
+            <dd class="col-sm-8">@Model.RentalEndDate.ToString("dd MMM yyyy")</dd>
+
+            <dt class="col-sm-4">Booked On:</dt>
+            <dd class="col-sm-8">@Model.BookedOn.ToString("dd MMM yyyy hh:mm tt")</dd>
+
+            <dt class="col-sm-4">Total Price:</dt>
+            <dd class="col-sm-8">₹@Model.RentalPrice.ToString("N2")</dd>
+        </dl>
+
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Rentals")" class="btn btn-primary">Back to Rentals</a>
+        </div>
+    </div>
+</div>

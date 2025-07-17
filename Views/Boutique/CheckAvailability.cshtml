@@ -1,0 +1,67 @@
+﻿@model BoutiqueManagement.ViewModels.AvailabilityResultViewModel
+@{
+    ViewBag.Title = "Check Availability";
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+<div class="container mt-5" style="max-width:600px;">
+    <h3>Check Availability</h3>
+
+    <form asp-action="CheckAvailability" method="post" class="mt-4">
+        <div class="mb-3">
+            <label>Item Code</label>
+            <input type="text" name="itemCode" class="form-control" required placeholder="e.g. 1234">
+        </div>
+        <div class="mb-3">
+            <label>Rental Start Date</label>
+            <input type="date" name="startDate" id="startDate" class="form-control" min="@today" required>
+        </div>
+        <div class="mb-3">
+            <label>Rental End Date</label>
+            <input type="date" name="endDate" id="endDate" class="form-control" min="@today" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Check Availability</button>
+    </form>
+
+    @if (Model.HasSearched)
+    {
+        if (string.IsNullOrEmpty(Model.ItemCode))
+        {
+            <div class="alert alert-warning mt-3">⚠ Please enter an item code.</div>
+        }
+        else if (Model.NotFound)
+        {
+            <div class="alert alert-danger mt-3">❌ No item found with code: <strong>@Model.ItemCode</strong></div>
+        }
+        else if (Model.InvalidDateRange)
+        {
+            <div class="alert alert-warning mt-3">⚠ Start date cannot be after end date.</div>
+        }
+        else if (Model.IsAvailable)
+        {
+            <div class="alert alert-success mt-3">
+                ✅ <strong>@Model.ItemName</strong> (Code: @Model.ItemCode)
+                is available from @Model.StartDate?.ToString("dd MMM") to @Model.EndDate?.ToString("dd MMM").
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger mt-3">
+                ❌ Sorry, <strong>@Model.ItemName</strong> (Code: @Model.ItemCode)
+                is already booked for these dates.
+            </div>
+        }
+    }
+</div>
+
+<script>
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+
+    startDateInput.addEventListener('change', () => {
+        endDateInput.min = startDateInput.value;
+        if (endDateInput.value < startDateInput.value) {
+            endDateInput.value = startDateInput.value;
+        }
+    });
+</script>

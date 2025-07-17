@@ -1,0 +1,25 @@
+﻿@model List<BoutiqueManagement.Models.BoutiqueItem>
+@{
+    ViewBag.Title = "Sales";
+}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Sale Outfits</h3>
+        <a class="btn btn-success" asp-action="Create">+ Add Sale Item</a>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card shadow-sm">
+                    <img src="@item.ImageUrl" class="card-img-top" style="height:200px;object-fit:cover;">
+                    <div class="card-body">
+                        <h5>@item.Name</h5>
+                        <small>Price: ₹@item.RentalPrice</small><br />
+                        <small>Code: @item.ItemCode</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
